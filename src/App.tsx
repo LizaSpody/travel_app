@@ -35,16 +35,16 @@ const router = createBrowserRouter([
     element: <Profile />,
   },
   {
-    path: '/tour',
-    element: <Tour />,
-  },
-  {
     path: '/tours',
     element: <Tours />,
   },
   {
     path: '/user',
     element: <User />,
+  },
+  {
+    path: '/tour/:tourId',
+    element: <Tour />,
   },
 ]);
 
