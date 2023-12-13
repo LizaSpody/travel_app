@@ -1,0 +1,47 @@
+.tour {
+  &_header {
+    margin-bottom: 32px;
+
+    &-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+  }
+
+  &_info {
+    &-title {
+      color: #022359;
+      font-size: 40px;
+      font-weight: 400;
+      line-height: 125%;
+      letter-spacing: 0.22px;
+      text-transform: uppercase;
+      margin-bottom: 0;
+    }
+
+    &-details {
+      margin-bottom: 7px;
+      color: #022359;
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 18px;
+      letter-spacing: 0.22px;
+    }
+  }
+
+  &_tags {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    &-item {
+      color: #B3B3B3;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 18px;
+      letter-spacing: 0.22px;
+      margin-right: 8px;
+    }
+  }
+}
