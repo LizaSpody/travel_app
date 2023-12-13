@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Button, Space } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import './index.scss';
+import format from "date-fns/format";
 
 interface DateTour {
   start: Date;
@@ -28,18 +29,17 @@ interface TourHeaderProps {
 const TourHeader: React.FC<TourHeaderProps> = ({ arr }) => {
   const { name, plan, tags } = arr;
 
-  const showCity = () => plan.map((item) => item.city).join(', ');
-  const getDates = () => {
+  const citiesList = useMemo(() => plan.map((item) => item.city).join(', '), [plan]);
+  const datesList = useMemo(() => {
     const firstDate = plan[0].dates;
     const lastDate = plan[plan.length - 1].dates;
-    return `${firstDate.start.toLocaleString('en', {
-      month: 'short',
-    })} ${firstDate.start.getDate()} - ${
-      firstDate.start.getMonth() === lastDate.finish.getMonth()
-        ? ''
-        : lastDate.start.toLocaleString('en', { month: 'short' })
-    }  ${lastDate.finish.getDate()}`;
-  };
+
+    return `${format(firstDate.start, 'LLL d')} - ${
+        format(firstDate.start, 'L') === format(lastDate.finish, 'L')
+            ? format(lastDate.finish, 'd')
+            : format(lastDate.finish, 'LLL d')
+    }`;
+  }, [plan])
 
   return (
     <>
@@ -49,8 +49,8 @@ const TourHeader: React.FC<TourHeaderProps> = ({ arr }) => {
             <div className="tour_info">
               <h2 className="tour_info-title">{name}</h2>
               <p className="tour_info-details">
-                <span className="tour_info-country">{showCity()}</span> -{' '}
-                <span className="tour_info-date">{getDates()}</span>
+                <span className="tour_info-country">{citiesList}</span> -{' '}
+                <span className="tour_info-date">{datesList}</span>
               </p>
               <div className="tour_tags">
                 {tags.map((item, id) => <span key={id} className="tour_tags-item">#{item}</span>)}

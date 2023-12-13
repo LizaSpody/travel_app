@@ -10,8 +10,7 @@ const Info: React.FC = () => {
 
   const handleUpload = () => {
     const dbx = new Dropbox({
-      accessToken:
-        'sl.Bpsw4GIEDn-NViYJjihctfCmoBWPA1A1Bucvwtlv9G3x88pMSjGOhS5wFeLhj8ZW4aFcNpJMuvlemex0Vu3qTXUrIu9akAOnoKthEtVEEfLlJrA4YT3SgXzCzYGQAsPG22QshvJgo10TILQ5Lla87J0',
+      accessToken: process.env.ACCESS_TOKEN,
     });
 
     const formData = new FormData();

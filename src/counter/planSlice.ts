@@ -1,6 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../index';
 
+enum PlanTag {
+  Tag1 = '#tag1',
+  Tag2 = '#tag2',
+  Tag3 = '#tag3',
+}
+
 interface DateTour {
   start: Date;
   finish: Date;
@@ -17,7 +23,7 @@ interface ToursPlan {
 interface Plan {
   id: number;
   name: string;
-  tags: string[];
+  tags: PlanTag[];
   userCreator: string;
   photos: string[];
   dates: DateTour;
@@ -33,7 +39,7 @@ const initialState: CounterState = {
     {
       id: 0,
       name: 'Tour 1',
-      tags: ['hotel', 'Amsterdam', 'trip'],
+      tags: [PlanTag.Tag1, PlanTag.Tag2],
       userCreator: 'user1',
       photos: [
         'https://assets.gq.ru/photos/5d9f4f2d4c4d5f0009b28267/16:9/w_2560%2Cc_limit/16.jpg',

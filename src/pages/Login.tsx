@@ -19,6 +19,7 @@ const Login: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+// TODO rewrite when BE will be done
   const onFinish = (values: any) => {
     console.log('Success:', values);
 

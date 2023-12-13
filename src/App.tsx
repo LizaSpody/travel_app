@@ -7,6 +7,7 @@ import Tours from './pages/Tours';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
 import Tour from './pages/Tour';
+import AddTour from "./pages/AddTour";
 
 //ant-design
 //ant-design-chart
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
   {
     path: '/tour/:tourId',
     element: <Tour />,
+  },
+  {
+    path: '/add',
+    element: <AddTour />,
   },
 ]);
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import './index.scss';
+import format from 'date-fns/format'
 import { ClockCircleOutlined } from '@ant-design/icons';
 import { Timeline } from 'antd';
 import { useAppDispatch, useAppSelector } from '../../../hooks/utils';
@@ -29,13 +30,11 @@ const TimeLineItem: React.FC<ToursPlan> = (item) => {
   const getDates = () => {
     const firstDate = dates.start;
     const lastDate = dates.finish;
-    return `${firstDate.toLocaleString('en', {
-      month: 'short',
-    })} ${firstDate.getDate()} - ${
-      firstDate.getMonth() === lastDate.getMonth()
-        ? ''
-        : lastDate.toLocaleString('en', { month: 'short' })
-    }  ${lastDate.getDate()}`;
+    return `${format(firstDate, 'LLL d')} - ${
+      format(firstDate, 'L') === format(lastDate, 'L')
+        ? format(lastDate, 'd')
+        : format(lastDate, 'LLL d')
+    }`;
   };
 
   return (
