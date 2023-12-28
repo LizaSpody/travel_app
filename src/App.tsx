@@ -4,10 +4,11 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Info from './pages/Info';
 import User from './pages/User';
 import Tours from './pages/Tours';
-import Login from './pages/Login';
+import Login from './pages/Login/Login';
 import Profile from './pages/Profile';
 import Tour from './pages/Tour';
-import AddTour from "./pages/AddTour";
+import AddTour from './pages/AddTour';
+import Registration from './pages/Registration/Registration';
 
 //ant-design
 //ant-design-chart
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
   {
     path: '/add',
     element: <AddTour />,
+  },
+  {
+    path: '/registration',
+    element: <Registration />,
   },
 ]);
 
