@@ -1,15 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { CloseOutlined } from '@ant-design/icons';
 import {
   Button,
   Card,
   Form,
   Input,
-  Space,
   DatePicker,
   Select,
   Typography,
+  Upload,
 } from 'antd';
+import { InboxOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import { createNewTour, PlanTag } from '../../counter/planSlice';
 import { useAppDispatch } from '../../hooks/utils';
@@ -79,24 +80,17 @@ function AddTour() {
     label: (PlanTag as PlanTagIndex)[key],
   }));
 
+  const normFile = (e: any) => {
+    console.log('Upload event:', e);
+    if (Array.isArray(e)) {
+      return e;
+    }
+    return e?.fileList;
+  };
+
   const handleChangeHotel = (value: string) => {
     console.log(typeHotel);
     setTypeHotel(value);
-  };
-
-  const onGenderChange = (value: string) => {
-    switch (value) {
-      case 'male':
-        form.setFieldsValue({ note: 'Hi, man!' });
-        break;
-      case 'female':
-        form.setFieldsValue({ note: 'Hi, lady!' });
-        break;
-      case 'other':
-        form.setFieldsValue({ note: 'Hi there!' });
-        break;
-      default:
-    }
   };
 
   const handleSubmit = (el: any) => {
@@ -181,7 +175,7 @@ function AddTour() {
 
                       <Form.Item
                         label="Select"
-                        name={[field.name, `ticket ${+index}`]}
+                        name={[field.name, `ticket`]}
                       >
                         <>
                           <Select>
@@ -193,40 +187,46 @@ function AddTour() {
                       </Form.Item>
                       <Form.Item
                         shouldUpdate={(prevValues:any, currentValues:any) => {
-                            console.log(
-                              prevValues.items[index]?.[`ticket ${+index}`],
-                              currentValues.items[index][`ticket ${+index}`],
-                            );
                             return (
-                              prevValues.items[index]?.[`ticket ${+index}`] !==
-                              currentValues.items[index][`ticket ${+index}`]
+                              prevValues.items[index]?.[`ticket`] !==
+                              currentValues.items[index]?.[`ticket`]
                             );
 
                         }}
                       >
                         {({ getFieldValue }) => {
-                          console.log(
-                            getFieldValue([
-                              'items', index,
-                              field.name,
-                              `ticket ${+index}`,
-                            ]),
-                          );
-                          return getFieldValue([
-                            'items',
-                            field.name,
-                            `ticket ${+index}`,
-                          ]) ? (
-                            <Form.Item
-                              name={[field.name, `customizeGender${+index}`]}
-                              label="Customize Gender"
-                              rules={[{ required: true }]}
+                          const typeTicket = getFieldValue(['items', field.name, `ticket`,])
+
+                          if (typeTicket === 'text') {
+                            return <Form.Item
+                                name={[field.name, `ticketText`]}
+                                label="ticket Text"
                             >
                               <Input />
                             </Form.Item>
-                          ) : (
-                            'j'
-                          );
+                          }
+
+                          if (typeTicket === 'link') {
+                            return <Form.Item
+                                name={[field.name, `ticketLink`]}
+                                label="ticket Link"
+                            >
+                              <Input />
+                            </Form.Item>
+                          }
+
+                          if (typeTicket === 'file') {
+                            return  <Form.Item name="dragger" valuePropName="fileList" getValueFromEvent={normFile} noStyle>
+                              <Upload.Dragger name="files" action="/upload.do">
+                                <p className="ant-upload-drag-icon">
+                                  <InboxOutlined />
+                                </p>
+                                <p className="ant-upload-text">Click or drag file to this area to upload</p>
+                                <p className="ant-upload-hint">Support for a single or bulk upload.</p>
+                              </Upload.Dragger>
+                            </Form.Item>
+                          }
+
                         }}
                       </Form.Item>
                     </div>
