@@ -29,3 +29,17 @@
   display: flex;
   justify-content: space-between;
 }
+
+.section-title {
+  color: #022359;
+  font-family: "Poppins";
+  font-size: 64px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-transform: uppercase;
+}
+
+.section-title .color {
+  color: #008BFF;
+}
