@@ -44,12 +44,15 @@ const userSlice = createSlice({
     addElement: (state, action: PayloadAction<string>) => {
       console.log('j');
     },
+    addUser: (state, action: PayloadAction<User>) => {
+      state.value.push(action.payload);
+    },
     removeElement: (state, action: PayloadAction<string>) => {},
   },
 });
 
 //action
-export const { addElement, removeElement } = userSlice.actions;
+export const { addElement, removeElement, addUser } = userSlice.actions;
 
 //selector
 export const selectUserList = (state: RootState) => state.userList.value;
