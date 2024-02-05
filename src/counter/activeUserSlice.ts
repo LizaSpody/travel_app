@@ -21,12 +21,18 @@ const initialState: CounterState = {
   },
 };
 
+const activeUser = localStorage.getItem('userActive');
+if (activeUser) {
+  initialState.value =  JSON.parse(activeUser) as User;
+}
+
 const userActiveSlice = createSlice({
   name: 'userList',
   initialState,
   reducers: {
     addActiveUser: (state: CounterState, action: PayloadAction<User>) => {
       state.value = action.payload;
+      localStorage.setItem('userActive', JSON.stringify(state.value));
     },
   },
 });

@@ -168,11 +168,6 @@ function AddTour() {
                     </div>
                     <div className="ticket">
                       <div className="plus"></div>
-
-                      <input type="file" />
-                      <input type="text" placeholder="Link" />
-                      <input type="text" placeholder="Text" />
-
                       <Form.Item
                         label="Select"
                         name={[field.name, `ticket`]}
@@ -216,8 +211,15 @@ function AddTour() {
                           }
 
                           if (typeTicket === 'file') {
-                            return  <Form.Item name="dragger" valuePropName="fileList" getValueFromEvent={normFile} noStyle>
-                              <Upload.Dragger name="files" action="/upload.do">
+                            return  <Form.Item name={[field.name, `ticketFile`]} valuePropName="fileList" getValueFromEvent={normFile} noStyle>
+                              <Upload.Dragger name="files" customRequest={
+                                (arg) => {
+                                  const { onSuccess } = arg
+                                  if (onSuccess && typeof onSuccess === 'function') {
+                                    onSuccess('ok');
+                                  }
+                                }
+                              }>
                                 <p className="ant-upload-drag-icon">
                                   <InboxOutlined />
                                 </p>
@@ -232,24 +234,68 @@ function AddTour() {
                     </div>
                     <div className="hotel">
                       <div className="plus"></div>
-                      {typeHotel === 'file' ? <input type="file" /> : ''}
-                      {typeHotel === 'text' ? (
-                        <input type="text" placeholder="Text" />
-                      ) : (
-                        ''
-                      )}
-                      {typeHotel === 'link' ? (
-                        <input type="text" placeholder="Link" />
-                      ) : (
-                        ''
-                      )}
+                      <Form.Item
+                          label="Select"
+                          name={[field.name, `hotel`]}
+                      >
+                        <>
+                          <Select>
+                            <Select.Option value="link">Link</Select.Option>
+                            <Select.Option value="file">File</Select.Option>
+                            <Select.Option value="text">Text</Select.Option>
+                          </Select>
+                        </>
+                      </Form.Item>
+                      <Form.Item
+                          shouldUpdate={(prevValues:any, currentValues:any) => {
+                            return (
+                                prevValues.items[index]?.[`hotel`] !==
+                                currentValues.items[index]?.[`hotel`]
+                            );
 
-                      <Form.Item label="Hotel" name={[field.name, 'hotel']}>
-                        <Select onChange={handleChangeHotel} value={typeHotel}>
-                          <Select.Option value="link">Link</Select.Option>
-                          <Select.Option value="file">File</Select.Option>
-                          <Select.Option value="text">Text</Select.Option>
-                        </Select>
+                          }}
+                      >
+                        {({ getFieldValue }) => {
+                          const typeTicket = getFieldValue(['items', field.name, `hotel`,])
+
+                          if (typeTicket === 'text') {
+                            return <Form.Item
+                                name={[field.name, `hotelText`]}
+                                label="hotel Text"
+                            >
+                              <Input />
+                            </Form.Item>
+                          }
+
+                          if (typeTicket === 'link') {
+                            return <Form.Item
+                                name={[field.name, `hotelLink`]}
+                                label="hotel Link"
+                            >
+                              <Input />
+                            </Form.Item>
+                          }
+
+                          if (typeTicket === 'file') {
+                            return  <Form.Item name={[field.name, `hotelFile`]} valuePropName="fileList" getValueFromEvent={normFile} noStyle>
+                              <Upload.Dragger name="files" customRequest={
+                                (arg) => {
+                                  const { onSuccess } = arg
+                                  if (onSuccess && typeof onSuccess === 'function') {
+                                    onSuccess('ok');
+                                  }
+                                }
+                              }>
+                                <p className="ant-upload-drag-icon">
+                                  <InboxOutlined />
+                                </p>
+                                <p className="ant-upload-text">Click or drag file to this area to upload</p>
+                                <p className="ant-upload-hint">Support for a single or bulk upload.</p>
+                              </Upload.Dragger>
+                            </Form.Item>
+                          }
+
+                        }}
                       </Form.Item>
                     </div>
 

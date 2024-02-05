@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/utils';
 import { selectUserList } from '../../counter/usersSlice';
 import { addElement } from '../../counter/usersSlice';
 import { addActiveUser } from '../../counter/activeUserSlice';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, redirect } from 'react-router-dom';
 
 interface FieldType {
   username?: string;

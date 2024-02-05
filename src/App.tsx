@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import {createBrowserRouter, redirect, RouterProvider} from 'react-router-dom';
 import Info from './pages/Info';
 import User from './pages/User/User';
 import Tours from './pages/Tours/Tours';
@@ -31,6 +31,7 @@ const router = createBrowserRouter([
   {
     path: '/login',
     element: <Login />,
+    loader: () => localStorage.getItem("userActive") ? redirect('/user') : null
   },
   {
     path: '/profile',
@@ -55,6 +56,7 @@ const router = createBrowserRouter([
   {
     path: '/registration',
     element: <Registration />,
+    loader: () => localStorage.getItem("userActive") ? redirect('/user') : null
   },
 ]);
 
