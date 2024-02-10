@@ -74,7 +74,7 @@ function AddTour() {
   const [typeHotel, setTypeHotel] = useState('');
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [uploading, setUploading] = useState(false);
-  const [listPhoto, setListPhoto] = useState(false);
+  const [listFiles, setListFiles] = useState(false);
   const [form] = Form.useForm();
 
   const dispatch = useAppDispatch();
@@ -86,13 +86,15 @@ function AddTour() {
     setUploading(false);
   };
 
-  const uploadFile = (files: any) => {
-    const dbx = new Dropbox({
-      accessToken:
-        'sl.BvSNRvWTSbFX8nVXnr7mF-x8RdA1Mbbgdef07L5-GtwzrwrfaeLo4rGGqgkblUiD1q2AjnFW_K_qiAXoOqQX7BCiQ5EqvZYRLruvpTtcYgGgsdsrrdVkCiexDXSHhcr9mHAs3w9o2wAeQ3Ik_aJyRJM',
-      // accessToken: process.env.ACCESS_TOKEN,
-    });
+  console.log('token', process.env)
 
+  const dbx = new Dropbox({
+    accessToken:
+      'sl.BvVhH92VYAJNVFZKqHl2lTvW0531QtP1GUeiurUuYp_mLxPyujpBYWouFQfmV3zPSujIKvWMy9FcDIYLi-Bun2I1jQ8b557D5JN41FZaIDo3eJNLdtbD6EN81wwYZ-FpCVz7wIdryDzTa-Ft_qinRAc',
+    // accessToken: process.env.ACCESS_TOKEN,
+  });
+
+  const uploadFile = (files: any) => {
     const fileArr: any = [];
 
     const uploadPromises = files.map((file: any) => {
@@ -135,7 +137,7 @@ function AddTour() {
         throw error;
       })
       .finally(() => {
-        setListPhoto(fileArr);
+        setListFiles(fileArr);
       });
   };
 
@@ -169,10 +171,33 @@ function AddTour() {
     return e?.fileList;
   };
 
+  const uploadDocuments = (obj: any) => {
+    if (obj.items.length === 0 || !(Array.isArray(obj.items) && obj.items.some((item: any) => item != null))) return false;
+
+    obj.items = obj.items.filter(async (item:any)=>{
+      if(item != null) {
+        if(item.ticket === 'file') {
+
+          await uploadFile(item.ticketFile)
+
+          item.file = listFiles
+
+          delete item.ticketFile
+        }
+        return item
+      }
+    })
+
+    console.log('uploadDocuments:', obj.items);
+
+  };
+
   const handleSubmit = async (el: any) => {
     try {
-      await handleUploadPhoto();
-      dispatch(createNewTour(el));
+      // await handleUploadPhoto();
+      uploadDocuments(el);
+      console.log('el', el);
+      // dispatch(createNewTour(el));
     } catch (error) {
       console.error('Error:', error);
     }
