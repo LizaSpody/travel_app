@@ -86,8 +86,8 @@ function AddTour() {
     setUploading(false);
   };
 
-  console.log('token', process.env.ACCESS_TOKEN)
-  console.log('token1', process.env.ACCESS_TOKEN1)
+  console.log('token', process.env.NEXT_PUBLIC_ACCESS_TOKEN)
+  console.log('token1', process.env.NEXT_PUBLIC_ACCESS_TOKEN1)
   console.log('token', process.env)
 
   const dbx = new Dropbox({
