@@ -87,6 +87,8 @@ function AddTour() {
   };
 
   console.log('token', process.env.ACCESS_TOKEN)
+  console.log('token1', process.env.ACCESS_TOKEN1)
+  console.log('token', process.env)
 
   const dbx = new Dropbox({
     accessToken:
